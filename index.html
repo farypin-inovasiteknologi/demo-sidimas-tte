@@ -36,18 +36,19 @@ input, button, select, textarea {
     .hide { display: none !important; }
     
     /* --- PENGATURAN LAPTOP (MEMAKSA KANAN-KIRI) --- */
+    /* --- PENGATURAN LAPTOP (MEMAKSA KANAN-KIRI) --- */
     #view-login { 
         position: fixed; 
         top: 0; left: 0; 
         width: 100%; height: 100vh; z-index: 9000; 
-        display: flex !important; 
-        flex-direction: row !important; /* KUNCI 1: PAKSA MENYAMPING */
+        display: flex; /* <-- JANGAN PAKAI !important DI SINI */
+        flex-direction: row !important; /* Yang ini biarkan pakai !important untuk memaksa kanan-kiri */
         background: #f8f9fa; 
         overflow: hidden; 
     }
     
     .login-side { 
-        width: 50% !important; /* KUNCI 2: BAGI LAYAR JADI 2 SAMA RATA */
+        width: 50% !important; 
         display: flex; 
         flex-direction: column; 
         justify-content: center; 
