@@ -56,24 +56,24 @@
         padding: 20px;
     }
 
-    /* LAPISAN ANIMASI KAIN BERKIBAR (Shadow & Highlight) */
+    /* LAPISAN ANIMASI KAIN BERKIBAR (DIBUAT LEBIH TEGAS & REALISTIS) */
     #view-login::before {
         content: "";
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        /* Gradien hitam & putih transparan untuk efek gelombang kain */
+        /* Kontras bayangan gelap dan terang dinaikkan agar efek lipatan sangat jelas */
         background: linear-gradient(
-            110deg, 
-            rgba(0,0,0,0) 0%, 
-            rgba(0,0,0,0.15) 25%, 
-            rgba(255,255,255,0.2) 50%, 
-            rgba(0,0,0,0.15) 75%, 
-            rgba(0,0,0,0) 100%
+            105deg, 
+            rgba(0,0,0,0.1) 0%, 
+            rgba(0,0,0,0.5) 25%,   /* Bayangan gelap lipatan */
+            rgba(255,255,255,0.4) 50%, /* Cahaya terang puncak lipatan */
+            rgba(0,0,0,0.5) 75%, 
+            rgba(0,0,0,0.1) 100%
         );
-        background-size: 200% 200%;
-        animation: kibarBendera 6s ease-in-out infinite alternate;
-        z-index: 0; /* Taruh di bawah kotak login */
-        pointer-events: none; /* Agar tidak memblokir klik mouse */
+        background-size: 300% 100%; /* Diperlebar agar ombaknya panjang */
+        animation: kibarBendera 5s ease-in-out infinite alternate;
+        z-index: 0; 
+        pointer-events: none; 
     }
 
     /* RUMUS PERGERAKAN ANIMASI BENDERA */
@@ -90,13 +90,14 @@
         justify-content: center; 
         align-items: center; 
         padding: 40px; 
-        box-shadow: 0 25px 50px rgba(0,0,0,0.3); /* Bayangan kotak dipertebal sedikit */
-        z-index: 1; /* Pastikan kotak login berada di TATA LAPIS atas bendera */
+        box-shadow: 0 25px 50px rgba(0,0,0,0.4); /* Bayangan kotak dipertebal biar makin melayang dari bendera */
+        z-index: 1; /* Pastikan kotak login di atas bendera */
     }
 
-    /* Kotak Kiri (Branding) */
+    /* Kotak Kiri (Branding) - WARNA DINAMIS PILIHAN ADMIN + BIRU GELAP */
     .bg-branding { 
-        background: linear-gradient(160deg, #004085 0%, #001a35 100%); 
+        /* var(--main-color) adalah warna pilihan admin, dicampur ke biru tua (#001a35) */
+        background: linear-gradient(160deg, var(--main-color) 0%, #001a35 100%); 
         color: white; 
         text-align: center; 
         position: relative; 
