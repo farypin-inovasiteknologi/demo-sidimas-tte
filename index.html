@@ -607,7 +607,7 @@
           </div>
       </div>
       
-      <div id="page-users" class="page-view hide"><div class="card shadow-sm border-0"><div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"><h5 class="mb-0">Manajemen User</h5><button class="btn btn-light btn-sm btn-refresh text-primary" onclick="loadUsers()" title="Refresh"><i class="fas fa-sync-alt"></i></button></div><div class="card-body"><div class="mb-3"><button class="btn btn-success btn-sm" onclick="modalUser('add')"><i class="fas fa-plus"></i> Tambah User</button></div><div class="table-responsive"><table class="table table-bordered table-hover"><thead class="table-light"><tr><th>Username</th><th>Password</th><th>Role</th><th>Nama Lengkap</th><th>Aksi</th></tr></thead><tbody id="tbody-users"></tbody></table></div></div></div></div>
+      <div id="page-users" class="page-view hide"><div class="card shadow-sm border-0"><div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"><h5 class="mb-0">Manajemen User</h5><button class="btn btn-light btn-sm btn-refresh text-primary" onclick="loadUsers()" title="Refresh"><i class="fas fa-sync-alt"></i></button></div><div class="card-body"><div class="mb-3"><button class="btn btn-success btn-sm" onclick="modalUser('add')"><i class="fas fa-plus"></i> Tambah User</button></div><div class="table-responsive"><table class="table table-bordered table-hover"><thead class="table-light"><tr><th>Username</th><th>Password</th><th>Role</th><th>Nama Lengkap</th><th>Email</th><th>Aksi</th></tr></thead><tbody id="tbody-users"></tbody></table></div></div></div></div>
       
       <div id="page-setting" class="page-view hide">
           <div class="card shadow-sm border-0">
@@ -771,7 +771,12 @@
         <option value="Kepsek">Kepsek</option>
     </select>
 </div>
-<div class="mb-3"><label>Nama Lengkap</label><input name="nama" id="uFull" class="form-control" required></div><button class="btn btn-success w-100">Simpan</button></form></div></div></div></div>
+<div class="mb-3"><label>Nama Lengkap</label><input name="nama" id="uFull" class="form-control" required></div>
+<div class="mb-3">
+    <label>Email (Untuk Lupa Password)</label>
+    <input type="email" name="email" id="uEmail" class="form-control" required>
+</div>
+<button class="btn btn-success w-100">Simpan</button></form></div></div></div></div>
   
 <div class="modal fade" id="modalCrop" tabindex="-1" data-bs-backdrop="static">
       <div class="modal-dialog modal-dialog-centered">
@@ -1811,16 +1816,49 @@ function unduhDokumenStaf(id) {
 }
 
   /* --- MANAJEMEN USER --- */
-  function modalUser(m,u,p,r,n) { $('#uMode').val(m); if(m==='add'){ $('#uName').val('').prop('readonly',false);$('#uPass,#uFull').val(''); } else { $('#uOld').val(u); $('#uName').val(u).prop('readonly',true); $('#uPass').val(p); $('#uRole').val(r); $('#uFull').val(n); } new bootstrap.Modal('#modalUser').show(); }
+  
   function submitUser(e) { e.preventDefault(); showLoadingTimer('Menyimpan User...'); apiCall('saveUser', Object.fromEntries(new FormData(e.target))).then(r=>{ if(r.success){ Swal.fire('OK','Disimpan','success'); bootstrap.Modal.getInstance('#modalUser').hide(); loadUsers(); }else Swal.fire('Err',r.message,'error'); }); }
 
-  /*--KHUSUS DEMO DINONAKTIFKAN EDIT DAN HAPUS--*/
-  function loadUsers() { apiCall('getUsersList')
-  .then(r=>{ let h=''; r.forEach(u=>{ h+=`<tr><td>${u[0]}</td><td>******</td><td>${u[2]}</td><td>${u[3]}</td><td>
-  <button class="btn btn-sm btn-warning" onclick="modalUser('edit','${u[0]}','${u[1]}','${u[2]}','${u[3]}')" title="Edit"><i class="fas fa-edit"></i></button>
-  <button class="btn btn-sm btn-danger" onclick="delUser('${u[0]}')" title="Hapus"><i class="fas fa-trash"></i></button>
-  </td></tr>`; }); $('#tbody-users').html(h); }); }
+ // Fungsi membuka pop-up tambah/edit
+function modalUser(m, u, p, r, n, e_mail) { 
+    $('#uMode').val(m); 
+    if(m === 'add') { 
+        $('#uName').val('').prop('readonly', false);
+        $('#uPass').val('');
+        $('#uFull').val('');
+        $('#uEmail').val(''); // Kosongkan form email
+    } else { 
+        $('#uOld').val(u); 
+        $('#uName').val(u).prop('readonly', true); 
+        $('#uPass').val(p); 
+        $('#uRole').val(r); 
+        $('#uFull').val(n); 
+        $('#uEmail').val(e_mail); // Isi form email
+    } 
+    new bootstrap.Modal('#modalUser').show(); 
+}
 
+// Fungsi memuat data ke tabel
+function loadUsers() { 
+    apiCall('getUsersList').then(r => { 
+        let h = ''; 
+        r.forEach(u => { 
+            const emailTampil = u[4] ? u[4] : '-'; // Tampilkan '-' jika email masih kosong
+            h += `<tr>
+                <td>${u[0]}</td>
+                <td>******</td>
+                <td>${u[2]}</td>
+                <td>${u[3]}</td>
+                <td>${emailTampil}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning" onclick="modalUser('edit','${u[0]}','${u[1]}','${u[2]}','${u[3]}','${u[4]}')" title="Edit"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="delUser('${u[0]}')" title="Hapus"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`; 
+        }); 
+        $('#tbody-users').html(h); 
+    }); 
+}
   
   function delUser(u) { if(confirm('Hapus User ini?')) apiCall('deleteUser', {u: u}).then(loadUsers); }
   function modalPrivasi(){ new bootstrap.Modal(document.getElementById('modalPrivasi')).show(); }
@@ -2065,24 +2103,35 @@ function simpanSettingKepsek(e) {
       bootstrap.Modal.getInstance(document.getElementById('modalCrop')).hide();
   });
 
-  function handleForgotPassword() {
+  // Fungsi Pop-up Lupa Password
+function handleForgotPassword() {
     Swal.fire({
         title: 'Lupa Password?',
-        text: 'Masukkan email resmi yang terdaftar:',
+        text: 'Masukkan alamat email yang terdaftar di akun Anda:',
         input: 'email',
-        inputPlaceholder: 'nama@email.com',
+        inputPlaceholder: 'contoh@email.com',
         showCancelButton: true,
-        confirmButtonText: 'Kirim Password Baru',
+        confirmButtonText: '<i class="fas fa-paper-plane me-1"></i> Kirim Password',
+        cancelButtonText: 'Batal',
         showLoaderOnConfirm: true,
-        preConfirm: (email) => {
-            return apiCall('forgotPassword', { email: email })
+        preConfirm: (emailInput) => {
+            // Memanggil API forgotPassword di backend
+            return apiCall('forgotPassword', { email: emailInput })
                 .then(r => {
-                    if (!r.success) throw new Error(r.message);
+                    if (!r.success) {
+                        throw new Error(r.message);
+                    }
                     return r;
-                }).catch(err => { Swal.showValidationMessage(err); });
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(error.message);
+                });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('Berhasil Terkirim!', result.value.message, 'success');
         }
-    }).then((res) => {
-        if (res.isConfirmed) Swal.fire('Berhasil', res.value.message, 'success');
     });
 }
 
