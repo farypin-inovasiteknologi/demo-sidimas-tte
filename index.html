@@ -657,7 +657,7 @@ input, button, select, textarea {
   <script>
   /* --- KONFIGURASI API (URL DARI GOOGLE APPS SCRIPT) --- */
   // NANTI GANTI LINK DI BAWAH INI DENGAN LINK HASIL DEPLOY APPS SCRIPT KAMU
-  const API_URL = "https://script.google.com/a/macros/admin.sma.belajar.id/s/AKfycbxCGfMZsbctAd2_jvvrfZxWipCllMFAvbbMxT5HJProt93In1FVzbnyt7MtZYMCaq-P/exec"; 
+  const API_URL = "https://script.google.com/a/macros/admin.sma.belajar.id/s/AKfycbxLCm9UbErx3hB9RPhjDae3MXT84QnpNZ45bFuM3ktNoYOS5hlQqyrmOQiC1B_Wajq7/exec"; 
 
   /* --- FUNGSI JEMBATAN PENGHUBUNG (FETCH API) --- */
   async function apiCall(actionName, payloadData = {}) {
@@ -1219,15 +1219,27 @@ function panggilApiGenerate(dataObj) {
 
       // Fungsi untuk memotong teks panjang menjadi maksimal 50 karakter
       const potongTeks = (d) => d && d.length > 50 ? d.substring(0, 50) + '...' : d;
-      
-      const cm=[ {title:"ID",visible:false}, {title:"Tgl Terima"},{title:"Pengirim"},{title:"Tgl Surat"},{title:"No Surat"}, {title:"Perihal"},{title:"Tujuan"},{title:"Uraian", render: potongTeks},{title:"Ket"}, {title:"File",render:btnFile}, {title:"Aksi",render:(d,t,row,meta) => renderAksi(meta.row, 'masuk')} ]; 
+      const potongTeks2 = (d) => d && d.length > 20 ? d.substring(0, 20) + '...' : d;
+
+      const cm=[ 
+      {title:"ID",visible:false}, 
+      {title:"Tgl Terima", visible:false},
+      {title:"Pengirim",render: potongTeks2},
+      {title:"Tgl Surat"},
+      {title:"No Surat"},
+      {title:"Perihal", render: potongTeks2},
+      {title:"Tujuan", visible:false},
+      {title:"Uraian", render: potongTeks},
+      {title:"Ket", visible:false}, 
+      {title:"File",render:btnFile}, 
+      {title:"Aksi",render:(d,t,row,meta) => renderAksi(meta.row, 'masuk')} ]; 
       const ck=[ 
     {title:"ID", visible:false}, 
     {title:"Tgl Surat"},
     {title:"Klasifikasi", visible:false}, // Kolom disembunyikan
     {title:"No Surat"},
-    {title:"Perihal"}, 
-    {title:"Tujuan"},
+    {title:"Perihal", render: potongTeks2}, 
+    {title:"Tujuan", render: potongTeks2},
     {title:"Uraian", render: potongTeks},
     {title:"Ket", visible:false}, // Kolom disembunyikan
     {title:"File", render:btnFile}, 
