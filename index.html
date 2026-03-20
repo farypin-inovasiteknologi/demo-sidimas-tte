@@ -104,39 +104,121 @@ input, button, select, textarea {
         .btn-scroll-top { bottom: 100px !important; right: 15px !important; }
     }
 
+    /* --- CSS BARU UNTUK LOGIN SPLIT SCREEN --- */
+    .login-wrapper { display: flex; width: 100%; height: 100vh; overflow: hidden; background: #f8f9fa; }
+    .login-side { flex: 1; flex-direction: column; justify-content: center; align-items: center; padding: 40px; }
+    
+    /* Sisi Kiri (Branding) */
+    .bg-branding { background: linear-gradient(135deg, var(--main-color) 0%, #004085 100%); color: white; text-align: center; position: relative; }
+    .branding-content { max-width: 500px; width: 100%; }
+    .logo-instansi-login, .logo-sekolah-login { height: 85px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2)); }
+    .text-instansi { font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; margin-top: 15px;}
+    .text-sekolah { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: #ffc107; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); line-height: 1.1; margin-top: 5px; }
+    .divider-light { border-top: 2px solid rgba(255,255,255,0.2); width: 50px; margin: 0 auto; }
+    .logo-sidimas-large { height: 110px; object-fit: contain; filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.3)); }
+    .app-desc { font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
+
+    /* Sisi Kanan (Form) */
+    .bg-form { background-color: #f4f6f9; }
+    .form-content { background: white; padding: 50px 40px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); width: 100%; max-width: 420px; text-align: center; border: 1px solid rgba(0,0,0,0.05);}
+    .logo-sidimas-small { height: 70px; object-fit: contain; }
+    .login-footer { font-size: 0.8rem; color: #6c757d; line-height: 1.6; }
+    
+    .animation-fade { animation: fadeIn 1s ease; }
+    .animation-slide-up { animation: slideUp 0.8s ease; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Pengaturan Khusus HP (Mobile) */
+    @media (max-width: 768px) {
+        .login-wrapper { flex-direction: column; }
+        .login-side { width: 100%; height: 100vh; padding: 25px; justify-content: center; }
+        .text-sekolah { font-size: 1.5rem; }
+        .logo-instansi-login, .logo-sekolah-login { height: 70px; }
+        .logo-sidimas-large { height: 90px; }
+        .form-content { padding: 30px 20px; box-shadow: none; background: transparent; border: none; }
+        .bg-form { background-color: #ffffff; }
+    }
+
   </style>
 </head>
 <body>
   <button id="btnScrollTop" class="btn btn-primary btn-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
-  <div id="view-login">
-    <div class="login-container">
-      <div class="login-logos mb-3"><img id="logLogo1" class="login-logo" src=""><img id="logLogo2" class="login-logo" src=""></div>
-      <div class="login-instansi" id="logInstansi">INSTANSI</div>
-      <div class="login-sekolah" id="logSekolah">LOADING SYSTEM...</div>
-      <hr>
-      <center><div>
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5Iq0PC0J4qpH7z_GuIE9Cepwz0Rh89qLzw1DyombTi2PXzs1Nzre0ss1humGnCTbWM9fiTX6XrKp3KfXIo7SloNecnhDfB72l-Pc9s67S8y2oubyWbmxAVwGPlUusHFzJvXUNykBBcogD9yipbtV_n_f-VdjRmAzzyOawxdfjLH-T2BXtRGGZeX85a6k-/s709/logo%20sidimas%20TTE.png" alt="Logo" class="login-logo2">
-        <p class="text-muted small mb-4" style="font-weight: 600">Sistem Digital Manajemen Arsip Surat<br>TTE Terintegrasi + AI</p> 
-      </div></center>
-      <form onsubmit="prosesLogin(event)" autocomplete="off">
-        <div class="form-floating mb-3 text-start"><input id="u" class="form-control" placeholder="U" required><label>Username</label></div>
-        <div class="input-group mb-4"><div class="form-floating flex-grow-1 text-start"><input id="p" type="password" class="form-control" placeholder="P" required><label>Password</label></div><button class="btn btn-outline-secondary" type="button" onclick="togglePass()"><i class="fas fa-eye" id="iconPass"></i></button></div>
-        <button id="btnLogin" class="btn btn-primary w-100 py-2 fw-bold text-uppercase rounded-pill"><span>Masuk Aplikasi</span><span class="spinner-border spinner-border-sm hide" role="status"></span></button>
-      </form>
-      <div class="mt-4 pt-3 border-top">
-          <p class="text-muted small mb-2 fw-bold">Unduh Versi Aplikasi:</p>
-          <div class="d-flex justify-content-center gap-2">
-              <a href="LINK_DOWNLOAD_EXE_ANDA_DISINI" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold shadow-sm">
-                  <i class="fab fa-windows me-1"></i> Windows
-              </a>
-              <a href="LINK_DOWNLOAD_APK_ANDA_DISINI" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-bold shadow-sm">
-                  <i class="fab fa-android me-1"></i> Android
-              </a>
+  <div id="view-login" class="login-wrapper">
+      
+      <div id="login-left" class="login-side bg-branding d-flex">
+          <div class="branding-content animation-fade">
+              <div class="d-flex justify-content-center align-items-center mb-3 gap-3">
+                  <img id="logLogo1" class="logo-instansi-login" src="" alt="Logo Instansi">
+                  <img id="logLogo2" class="logo-sekolah-login" src="" alt="Logo Sekolah">
+              </div>
+              
+              <div class="text-instansi" id="logInstansi">INSTANSI</div>
+              <div class="text-sekolah" id="logSekolah">LOADING SYSTEM...</div>
+              
+              <hr class="divider-light my-4">
+              
+              <div class="app-info">
+                  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5Iq0PC0J4qpH7z_GuIE9Cepwz0Rh89qLzw1DyombTi2PXzs1Nzre0ss1humGnCTbWM9fiTX6XrKp3KfXIo7SloNecnhDfB72l-Pc9s67S8y2oubyWbmxAVwGPlUusHFzJvXUNykBBcogD9yipbtV_n_f-VdjRmAzzyOawxdfjLH-T2BXtRGGZeX85a6k-/s709/logo%20sidimas%20TTE.png" alt="Logo SiDiMAS" class="logo-sidimas-large mb-2">
+                  <p class="app-desc">Sistem Digital Manajemen Arsip Surat<br>TTE Terintegrasi + AI</p>
+              </div>
+
+              <div class="download-section mt-4">
+                  <p class="small mb-2 fw-bold opacity-75">Unduh Versi Aplikasi Desktop/Mobile:</p>
+                  <div class="d-flex justify-content-center gap-2">
+                      <a href="LINK_DOWNLOAD_EXE" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3 fw-bold">
+                          <i class="fab fa-windows me-1"></i> Windows
+                      </a>
+                      <a href="LINK_DOWNLOAD_APK" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3 fw-bold">
+                          <i class="fab fa-android me-1"></i> Android
+                      </a>
+                  </div>
+              </div>
+
+              <button class="btn btn-warning rounded-pill px-4 py-2 mt-5 fw-bold shadow-lg d-md-none text-dark" onclick="toggleLoginMobile('form')">
+                  Masuk Aplikasi <i class="fas fa-arrow-right ms-2"></i>
+              </button>
           </div>
       </div>
-    </div>
-    <div class="footer">&copy; 2026 SiDiMAS | All Right Reserved.<br><a href="javascript:void(0)" onclick="modalPrivasi()">Kebijakan Privasi</a> | Created by : <a href='https://www.farypin-inovasiteknologi.com' target="_blank" style="color:white">PT Farypin Inovasi Teknologi</a></div>
+
+      <div id="login-right" class="login-side bg-form d-none d-md-flex">
+          <div class="form-content animation-slide-up">
+              
+              <div class="text-start d-md-none mb-4">
+                  <button class="btn btn-sm btn-light text-secondary rounded-pill fw-bold" onclick="toggleLoginMobile('branding')">
+                      <i class="fas fa-arrow-left me-1"></i> Kembali
+                  </button>
+              </div>
+
+              <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5Iq0PC0J4qpH7z_GuIE9Cepwz0Rh89qLzw1DyombTi2PXzs1Nzre0ss1humGnCTbWM9fiTX6XrKp3KfXIo7SloNecnhDfB72l-Pc9s67S8y2oubyWbmxAVwGPlUusHFzJvXUNykBBcogD9yipbtV_n_f-VdjRmAzzyOawxdfjLH-T2BXtRGGZeX85a6k-/s709/logo%20sidimas%20TTE.png" alt="Logo SiDiMAS" class="logo-sidimas-small mb-3">
+              <h4 class="fw-bold text-dark mb-4">Silakan Login</h4>
+
+              <form onsubmit="prosesLogin(event)" autocomplete="off">
+                  <div class="form-floating mb-3 text-start">
+                      <input id="u" class="form-control rounded-3" placeholder="U" required>
+                      <label>Username</label>
+                  </div>
+                  <div class="input-group mb-4">
+                      <div class="form-floating flex-grow-1 text-start">
+                          <input id="p" type="password" class="form-control rounded-start-3" placeholder="P" required>
+                          <label>Password</label>
+                      </div>
+                      <button class="btn btn-outline-secondary rounded-end-3 bg-white" type="button" onclick="togglePass()">
+                          <i class="fas fa-eye text-muted" id="iconPass"></i>
+                      </button>
+                  </div>
+                  <button id="btnLogin" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-sm text-uppercase">
+                      <span>Masuk Aplikasi</span><span class="spinner-border spinner-border-sm hide" role="status"></span>
+                  </button>
+              </form>
+
+              <div class="login-footer mt-5">
+                  &copy; 2026 SiDiMAS | <a href="javascript:void(0)" onclick="modalPrivasi()" class="text-primary text-decoration-none">Kebijakan Privasi</a><br>
+                  Created by : <a href='https://www.farypin-inovasiteknologi.com' target="_blank" class="text-secondary text-decoration-none fw-bold">PT Farypin Inovasi Teknologi</a>
+              </div>
+          </div>
+      </div>
+
   </div>
 
   <div id="view-dashboard" class="hide">
@@ -1855,6 +1937,19 @@ function simpanSettingKepsek(e) {
       
       bootstrap.Modal.getInstance(document.getElementById('modalCrop')).hide();
   });
+
+/* --- FUNGSI TOGGLE LOGIN KHUSUS HP --- */
+  function toggleLoginMobile(targetView) {
+      if (targetView === 'form') {
+          // Sembunyikan Kiri, Munculkan Kanan
+          $('#login-left').removeClass('d-flex').addClass('d-none');
+          $('#login-right').removeClass('d-none').addClass('d-flex');
+      } else {
+          // Sembunyikan Kanan, Munculkan Kiri
+          $('#login-right').removeClass('d-flex').addClass('d-none');
+          $('#login-left').removeClass('d-none').addClass('d-flex');
+      }
+  }
 
 </script>
 
