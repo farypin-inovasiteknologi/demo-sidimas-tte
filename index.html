@@ -37,49 +37,73 @@
 
     .hide { display: none !important; }
 
-    /* ========================================= */
-    /* 1. CSS KHUSUS LOGIN (LAPTOP: JOIN BOX)   */
+   /* ========================================= */
+    /* 1. CSS KHUSUS LOGIN (BACKGROUND BENDERA)  */
     /* ========================================= */
     
     #view-login { 
         position: fixed; 
         top: 0; left: 0; 
         width: 100%; height: 100vh; z-index: 9000; 
-        /* KEMBALI KE GRADIENT BIRU UNTUK BACKGROUND UTAMA */
-        background: linear-gradient(135deg, var(--main-color) 0%, #004085 100%); 
+        /* Warna Dasar Bendera (Atas Merah, Bawah Putih) */
+        background: linear-gradient(180deg, #ce1126 50%, #ffffff 50%); 
         display: flex; 
         flex-direction: row; 
-        justify-content: center; /* Posisikan di tengah layar */
-        align-items: center; /* Centering vertikal */
-        gap: 0; /* HAPUS JARAK ANTAR KOTAK (DILENGKETKAN) */
-        overflow-y: auto;
+        justify-content: center; 
+        align-items: center; 
+        gap: 0; 
+        overflow: hidden;
         padding: 20px;
+    }
+
+    /* LAPISAN ANIMASI KAIN BERKIBAR (Shadow & Highlight) */
+    #view-login::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        /* Gradien hitam & putih transparan untuk efek gelombang kain */
+        background: linear-gradient(
+            110deg, 
+            rgba(0,0,0,0) 0%, 
+            rgba(0,0,0,0.15) 25%, 
+            rgba(255,255,255,0.2) 50%, 
+            rgba(0,0,0,0.15) 75%, 
+            rgba(0,0,0,0) 100%
+        );
+        background-size: 200% 200%;
+        animation: kibarBendera 6s ease-in-out infinite alternate;
+        z-index: 0; /* Taruh di bawah kotak login */
+        pointer-events: none; /* Agar tidak memblokir klik mouse */
+    }
+
+    /* RUMUS PERGERAKAN ANIMASI BENDERA */
+    @keyframes kibarBendera {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
     }
     
     .login-side { 
-        width: 420px; /* Lebar masing-masing kotak */
-        /* KUNCI SINKRONISASI TINGGI: Gunakan tinggi tetap (fixed height) */
+        width: 420px; 
         height: 600px; 
         display: flex; 
         flex-direction: column; 
         justify-content: center; 
         align-items: center; 
         padding: 40px; 
-        /* Bayangan dijatuhkan ke gabungan kotak */
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
+        box-shadow: 0 25px 50px rgba(0,0,0,0.3); /* Bayangan kotak dipertebal sedikit */
+        z-index: 1; /* Pastikan kotak login berada di TATA LAPIS atas bendera */
     }
 
-    /* Kotak Kiri (Branding) - Gradient Lebih Tegas */
+    /* Kotak Kiri (Branding) */
     .bg-branding { 
-        /* GRADIENT DIBUAT LEBIH GELAP DAN TEGAS */
         background: linear-gradient(160deg, #004085 0%, #001a35 100%); 
         color: white; 
         text-align: center; 
         position: relative; 
-        /* Lengkungan hanya di sisi kiri */
         border-radius: 24px 0 0 24px; 
     }
-    .branding-content { width: 100%; }
+
+     .branding-content { width: 100%; }
     .logo-instansi-login, .logo-sekolah-login { height: 85px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2)); }
     .text-instansi { font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; margin-top: 15px;}
     .text-sekolah { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: #ffc107; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); line-height: 1.1; margin-top: 5px; }
