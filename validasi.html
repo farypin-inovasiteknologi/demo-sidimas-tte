@@ -65,12 +65,19 @@
 
             <div class="data-ttd">
                 <p class="judul"><i class="fas fa-pen-nib me-2"></i>Naskah ini telah ditandatangani secara elektronik oleh :</p>
-                <div class="data-row"><span class="d-label">Nama</span><span class="d-value" id="v-nama"></span></div>
-                <div class="data-row"><span class="d-label">NIP</span><span class="d-value" id="v-nip"></span></div>
-                <div class="data-row"><span class="d-label">Jabatan</span><span class="d-value">Kepala Sekolah</span></div>
+                 <div class="data-row"><span class="d-label">Nama</span><span class="d-value" id="v-nama"></span></div>
+                 <div class="data-row"><span class="d-label">NIP</span><span class="d-value" id="v-nip"></span></div>
+                 <div class="data-row"><span class="d-label">Jabatan</span><span class="d-value">Kepala Sekolah</span></div>
+        
+                <div class="data-row"><span class="d-label">Unit Kerja</span><span class="d-value text-primary" id="v-sekolah-ttd"></span></div>
                 <div class="data-row"><span class="d-label">Instansi</span><span class="d-value" id="v-ins2"></span></div>
                 <div class="data-row mt-3"><span class="d-label">Nomor Surat</span><span class="d-value val-nomor" id="v-nomor"></span></div>
                 <div class="data-row"><span class="d-label">Ditandatangani Pada</span><span class="d-value text-success"><i class="far fa-clock me-1"></i><span id="v-waktu"></span></span></div>
+                
+                <div class="data-row mt-3 pt-3" style="border-top: 1px dashed #dee2e6;">
+                    <span class="d-label text-success"><i class="fas fa-fingerprint me-1"></i> Sidik Jari Dokumen (Hash)</span>
+                    <span class="d-value" style="font-family: monospace; font-size: 1.1rem; color: #d63384; letter-spacing: 2px;" id="v-hash"></span>
+                </div>
             </div>
             <div class="text-center text-muted d-none d-md-block" style="font-size:0.75rem;">&copy; 2026 SiDiMAS Verifier System</div>
         </div>
@@ -84,7 +91,7 @@
 
     <script>
         // MASUKKAN LINK APPS SCRIPT ANDA DI SINI
-        const API_URL = " https://script.google.com/a/macros/admin.sma.belajar.id/s/AKfycbxCGfMZsbctAd2_jvvrfZxWipCllMFAvbbMxT5HJProt93In1FVzbnyt7MtZYMCaq-P/exec";
+        const API_URL = " https://script.google.com/a/macros/admin.sma.belajar.id/s/AKfycbxLCm9UbErx3hB9RPhjDae3MXT84QnpNZ45bFuM3ktNoYOS5hlQqyrmOQiC1B_Wajq7/exec";
 
         document.addEventListener('DOMContentLoaded', () => {
             // Ambil Parameter ID dari URL (?id=...)
@@ -127,6 +134,7 @@
             
             document.getElementById('v-nama').innerText = data.namaKepsek;
             document.getElementById('v-nip').innerText = data.nipKepsek;
+            document.getElementById('v-sekolah-ttd').innerText = data.namaSekolah;
             document.getElementById('v-ins2').innerText = data.namaInstansi;
             
             // Format Nomor Surat (Tambahkan <wbr> untuk memotong baris)
@@ -135,6 +143,8 @@
             document.getElementById('v-waktu').innerHTML = data.waktuTtd.replace("&lt;br&gt;", "<br>");
             
             document.getElementById('btn-pdf').href = data.fileUrl;
+             // TAMBAHAN: Menampilkan Sidik Jari ke layar HTML
+            document.getElementById('v-hash').innerText = data.sidikJari;  
         }
 
         function tampilkanError(pesan) {
