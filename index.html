@@ -104,7 +104,7 @@
         border-radius: 24px 0 0 24px; 
     }
 
-     .branding-content { width: 100%; }
+    .branding-content { width: 100%; }
     .logo-instansi-login, .logo-sekolah-login { height: 85px; object-fit: contain; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2)); }
     .text-instansi { font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; margin-top: 15px;}
     .text-sekolah { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: #ffc107; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); line-height: 1.1; margin-top: 5px; }
@@ -335,6 +335,14 @@
         <img id="logoKiri" class="kop-logo" src="">
         <div class="kop-text"><span id="txtInstansi" class="txt-instansi"></span><span id="txtOpd" class="txt-opd"></span><span id="txtSekolah" class="txt-sekolah"></span><span id="txtAlamat" class="txt-alamat"></span><div class="small mt-1 text-muted"><span id="txtEmail"></span> | <span id="txtWeb"></span></div></div>
         <img id="logoKanan" class="kop-logo" src="">
+      </div>
+
+      <div id="disclaimer-tte" class="alert alert-warning alert-dismissible fade show shadow-sm hide mb-4" role="alert" style="border-left: 5px solid #ffc107;">
+          <h6 class="fw-bold mb-1 text-dark"><i class="fas fa-shield-alt text-warning me-2"></i>REKOMENDASI PENGGUNAAN TTE</h6>
+          <div class="small text-dark" style="line-height: 1.5;">
+              Sistem Tanda Tangan Elektronik (TTE) Mandiri ini disarankan untuk persuratan dinas rutin dan administrasi umum. Untuk dokumen yang bersifat <b>Sangat Rahasia, Krusial</b>, atau berisiko hukum tinggi, disarankan tetap memilih jalur <b>Tanda Tangan Manual & Stempel Basah</b>.
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
       <div id="page-home" class="page-view">
@@ -1030,11 +1038,21 @@
     const user = localStorage.getItem('sidimas_user');
     const role = localStorage.getItem('sidimas_role');
     const nama = localStorage.getItem('sidimas_nama');
+    
     if (user && role) {
       $('.modal-backdrop').remove(); $('body').removeClass('modal-open');
       $('#view-login').addClass('hide').css('display', 'none'); 
       $('#view-dashboard').removeClass('hide');
       $('#lblRole').text(role); $('#lblNama').text(nama);
+      
+      // --- LOGIKA BARU: TAMPILKAN DISCLAIMER KHUSUS ADMIN & KEPSEK ---
+      if (role === 'Admin' || role === 'Kepsek') {
+          $('#disclaimer-tte').removeClass('hide');
+      } else {
+          $('#disclaimer-tte').addClass('hide');
+      }
+      // ---------------------------------------------------------------
+
       // LOGIKA HAK AKSES MENU
       if (role === 'Kepsek') { 
           $('.admin-only').addClass('hide'); 
@@ -1054,6 +1072,7 @@
           $('.user-only').removeClass('hide');
           $('.non-kepsek').removeClass('hide'); 
       }
+      
       if($('#view-dashboard').is(':visible') && $('.nav-link.active').length === 0) { nav('home'); }
     } else { 
         $('#view-dashboard').addClass('hide'); 
