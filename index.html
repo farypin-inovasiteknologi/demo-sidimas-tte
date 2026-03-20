@@ -790,25 +790,50 @@
       </div>
   </div>
 
-  <div class="modal fade" id="modalPrivasi" tabindex="-1">
-      <div class="modal-dialog">
+ <div class="modal fade" id="modalPrivasi" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
-              <div class="modal-header"><h5 class="modal-title">Kebijakan Privasi</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-              <div class="modal-body">
-                  <p><strong>SiDiMAS (Sistem Digital Manajemen Arsip Surat)</strong></p>
-                  <span style="font-size:10px">
-                     <p>1. Pendahuluan.   <br>Kami menghargai privasi Anda. Kebijakan ini menjelaskan bagaimana SiDiMAS mengelola data Anda saat menggunakan fitur pembuatan surat otomatis dan manajemen arsip digital.</p>
-  <p>2. Informasi yang Kami Kumpulkan
-    <br> Untuk menjalankan fungsinya, SiDiMAS memproses data berikut: <br> - Data Surat: Informasi detail mengenai surat masuk dan keluar (seperti Nomor Surat, Perihal, Tanggal, Pengirim, dan Tujuan) yang Anda input ke dalam sistem. <br> - Dokumen Digital: File fisik surat (hasil scan atau PDF) yang Anda unggah untuk diarsipkan. <br> - Identitas Pengguna: Alamat email dan nama akun Google Anda untuk keperluan akses login dan pencatatan aktivitas (audit log).</p>
-  <p>3. Penggunaan Data <br> Data tersebut digunakan secara eksklusif untuk tujuan operasional aplikasi: <br> - Otomatisasi: Mengenerate file surat secara otomatis berdasarkan data yang Anda input <br> - Database: Mencatat, merekap, dan melacak riwayat surat masuk dan keluar. <br> - Pengarsipan: Menyimpan dan mengorganisir dokumen digital agar mudah dicari kembali di Google Drive.</p>
-  <p>4. Izin Akses (Permissions) <br> Aplikasi ini memerlukan izin akses ke akun Google Workspace Anda untuk: <br> - Google Sheets: Membaca dan menulis data pada buku agenda surat masuk/keluar. <br> - Google Docs: Membuat draf dan mencetak surat baru. <br> - Google Drive: Menyimpan file arsip dan mengakses template surat. </p>
-  <p>5. Penyimpanan Data <br> SiDiMAS beroperasi di lingkungan Google Apps Script. Kami tidak menyalin data Anda ke server pihak ketiga. Seluruh data surat, database, dan file arsip tersimpan aman di dalam Google Drive dan Google Sheets milik Instansi/Organisasi Anda sendiri. </p>
-  <p>6. Keamanan & Pembagian Data <br> Kami tidak membagikan atau menjual data surat Anda kepada pihak mana pun. Akses terhadap data hanya dimiliki oleh pengguna yang telah diberi wewenang oleh Admin Instansi. </p>
-                      <p><strong>Kontak Developer : </strong> <br>Jika ada pertanyaan mengenai penggunaan data di SiDiMAS, silakan hubungi: Tim Developer PT Farypin Inovasi Teknologi, Hp/WA : <a href='https://wa.me/6285219901909' target="_blank" style="color:blue">085219901909<a> </p> 
-                  </span>
+              <div class="modal-header bg-dark text-white">
+                  <h5 class="modal-title"><i class="fas fa-file-contract me-2"></i>Kebijakan Privasi & Ketentuan Layanan</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Saya Mengerti</button>
+              <div class="modal-body" style="font-size: 0.85rem; line-height: 1.6; color: #495057;">
+                  <p class="text-center fw-bold mb-4 text-dark" style="font-size: 1rem;">
+                      SiDiMAS (Sistem Digital Manajemen Arsip Surat)<br>
+                      <span class="badge bg-primary mt-1">Versi TTE Mandiri & AI</span>
+                  </p>
+
+                  <p class="fw-bold text-dark mb-1">1. Pendahuluan</p>
+                  <p class="mb-3">Kami sangat menghargai privasi dan keamanan data Anda. Dokumen ini menjelaskan pengelolaan data serta batasan tanggung jawab hukum (Disclaimer) atas penggunaan aplikasi SiDiMAS.</p>
+
+                  <p class="fw-bold text-dark mb-1">2. Pengumpulan & Penyimpanan Data</p>
+                  <p class="mb-3">SiDiMAS beroperasi di lingkungan ekosistem <b>Google Workspace milik Instansi Anda sendiri</b>. Seluruh data (Database Surat, File PDF, dan Log Aktivitas) tersimpan secara eksklusif dan aman di Google Sheets dan Google Drive Anda. Kami (Pengembang) <b>tidak menyalin, mengambil, atau menyimpan</b> data Anda di server pihak ketiga mana pun.</p>
+
+                  <p class="fw-bold text-dark mb-1">3. Penggunaan Kecerdasan Buatan (AI)</p>
+                  <p class="mb-3">Fitur <i>Auto-Fill AI</i> menggunakan layanan Google API secara aman. Dokumen yang Anda unggah hanya diproses untuk ekstraksi teks secara <i>real-time</i> dan <b>tidak digunakan</b> untuk melatih model AI publik atau disimpan oleh pengembang.</p>
+
+                  <p class="fw-bold text-dark mb-1 text-danger"><i class="fas fa-exclamation-triangle me-1"></i> 4. Status TTE & Disclaimer Hukum (UU ITE)</p>
+                  <div class="bg-light p-3 rounded border mb-3">
+                      <ul class="mb-0 ps-3">
+                          <li class="mb-1">Aplikasi ini menghasilkan <b>Tanda Tangan Elektronik (TTE) Tidak Tersertifikasi</b> yang dilengkapi sistem <i>Visual Integrity Check</i> (QR Code & Hash) untuk validasi mandiri.</li>
+                          <li class="mb-1">Penggunaan TTE ini direkomendasikan untuk <b>administrasi internal dan operasional persuratan rutin</b>. Untuk dokumen berisiko hukum tinggi atau sangat rahasia, disarankan menggunakan Tanda Tangan dan Stempel Basah.</li>
+                          <li class="text-danger fw-bold">Segala bentuk penyalahgunaan kewenangan, pemalsuan isi dokumen (manipulasi PDF), atau sengketa hukum yang timbul dari penggunaan surat yang dihasilkan oleh aplikasi ini adalah <b>sepenuhnya tanggung jawab Pengguna/Instansi</b>. PT Farypin Inovasi Teknologi dibebaskan dari segala tuntutan hukum.</li>
+                      </ul>
+                  </div>
+
+                  <p class="fw-bold text-dark mb-1">5. Keamanan Akun</p>
+                  <p class="mb-4">Admin instansi bertanggung jawab penuh untuk menjaga kerahasiaan <i>Username</i> dan <i>Password</i> pengguna. Sistem kami menggunakan enkripsi SHA-256 untuk melindungi kata sandi di dalam database.</p>
+
+                  <hr>
+                  <div class="text-center mt-3">
+                      <p class="fw-bold text-dark mb-1">Hubungi Pengembang:</p>
+                      <p class="mb-0"><b>PT Farypin Inovasi Teknologi</b><br>
+                      Layanan Bantuan & IT Support<br>
+                      HP / WhatsApp: <a href="https://wa.me/6285219901909" target="_blank" class="fw-bold text-success text-decoration-none"><i class="fab fa-whatsapp"></i> 0852-1990-1909</a></p>
+                  </div>
+              </div>
+              <div class="modal-footer bg-light">
+                  <button type="button" class="btn btn-primary w-100 fw-bold" data-bs-dismiss="modal">Saya Mengerti & Setuju</button>
               </div>
           </div>
       </div>
